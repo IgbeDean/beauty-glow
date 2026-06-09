@@ -1,0 +1,802 @@
+/* --- Hero Section --- */
+.hero-intro {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    
+    /* Replace 'hero-bg.jpg' with your actual image path */
+    background: linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0.1)), 
+                url('../images/home_images/background.jpg') no-repeat center center/cover;
+    color: var(--white);
+}
+
+.hero-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    width: 100%;
+}
+
+.hero-content {
+    max-width: 600px
+}
+
+/* --- Typography --- */
+.hero-subtitle {
+    color: var(--brand-extra); /* #d59090 */
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.hero-title {
+    font-size: 4.5rem; /* Big, bold statement */
+    font-family: var(--font-logo); /* Playfair Display if you have it */
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    text-transform: capitalize;
+}
+
+.hero-title span {
+    display: block; /* Puts 'Shine on' on a new line for drama */
+    color: var(--brand-extra);
+    font-style: italic;
+    font-weight: 300;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+}
+
+/* --- The Shop Button --- */
+.btn-primary {
+    display: inline-block;
+    background-color: var(--brand-rose);
+    color: var(--white);
+    padding: 15px 45px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    border-radius: 0; /* Sharp edges look more high-fashion */
+    transition: var(--transition);
+    border: 1px solid var(--brand-rose);
+}
+
+.btn-primary:hover {
+    background-color: transparent;
+    border-color: var(--white);
+    transform: scale(1.05);
+}
+
+
+
+
+/* --- Bestsellers Section --- */
+.bestsellers {
+    padding: 80px 0;
+    background-color: var(--white);
+}
+
+.bestsellers > .container >h3 {
+    text-align: center;
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--brand-text); /* Using your accent color */
+    margin-bottom: 0.5rem;
+    font-weight: 200;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 3rem;
+    color: var(--brand-black);
+    margin-bottom: 50px;
+    text-transform: capitalize;
+    font-family: var(--font-logo);
+}
+
+.section-title span {
+    color: var(--brand-rose); /* Makes 'Sellers' pop in Rose */
+    font-style: italic;
+    font-weight: 300;
+}
+
+
+/* --- Product Grid & Card (One Line Layout) --- */
+.product-grid {
+    display: flex; /* Changed from grid to flex to force one line */
+    justify-content: space-between; /* Spreads them out evenly */
+    align-items: flex-start;
+    gap: 30px; /* Space between the items */
+    padding: 20px 5%;
+    overflow-x: auto; /* Adds a scrollbar if they don't fit the screen */
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: var(--brand-rose) transparent;
+}
+
+/* Custom Scrollbar for Chrome/Safari to keep it pretty */
+.product-grid::-webkit-scrollbar {
+    height: 4px;
+}
+.product-grid::-webkit-scrollbar-thumb {
+    background: var(--brand-rose);
+    border-radius: 10px;
+}
+
+.product-card {
+    flex: 0 0 220px; /* This is the key: it forces each card to stay exactly 200px wide */
+    text-align: center;
+    transition: transform 0.3s ease;
+    padding: 10px;
+}
+
+.product-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    aspect-ratio: 1 / 1.2; /* Keeps all product images the same height */
+    margin-bottom: 15px;
+}
+
+.product-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+/* --- Hover Effects --- */
+.product-card:hover {
+    transform: translateY(-10px); /* Lifts the card slightly */
+}
+
+.product-card:hover img {
+    transform: scale(1.1); /* The "grow" effect on the image */
+}
+
+/* --- Badge & Overlay --- */
+.badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: var(--brand-rose);
+    color: var(--white);
+    padding: 5px 12px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    z-index: 10;
+}
+
+.product-overlay {
+    position: absolute;
+    bottom: -50px; /* Hidden by default */
+    left: 0;
+    width: 100%;
+    transition: bottom 0.3s ease;
+}
+
+.product-card:hover .product-overlay {
+    bottom: 0;
+}
+
+.btn-quick-add {
+    width: 100%;
+    padding: 15px;
+    background-color: rgba(99, 65, 65, 0.9);
+    color: var(--white);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* --- Details --- */
+.product-details h3 {
+    font-size: 1.1rem;
+    color: var(--brand-text);
+    margin-bottom: 8px;
+    font-weight: 400;
+}
+
+.product-details .price {
+    color: var(--brand-rose);
+    font-weight: 700;
+}
+
+.section-footer {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.btn-outline {
+    padding: 12px 35px;
+    border: 2px solid var(--brand-rose);
+    color: var(--brand-rose);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+    background-color: var(--brand-rose);
+    color: var(--white);
+}
+
+
+
+
+/*  FEATURE HIGHLIGHT SECTION  */
+.editorial-feature {
+    display: flex;
+    height: 100vh; /* Takes up the full screen height */
+    width: 100%;
+    position: relative;
+    background-color: #fff;
+    overflow: hidden;
+}
+
+/* The Black Left Side */
+.black-column {
+    flex: 0 0 50%; /* Exactly 50% width */
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Pushes text toward the center divider */
+    padding-right: 10%; 
+}
+
+/* The White Right Side */
+.white-column {
+    flex: 0 0 55%;
+    background-color: #fff;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* The Text Styling */
+.text-content {
+    max-width: 450px;
+    color: #fff;
+}
+
+.hot-label {
+    display: block;
+    font-size: 14px;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    font-family: sans-serif;
+}
+
+.editorial-title {
+    font-size: 4rem;
+    line-height: 1;
+    margin-bottom: 25px;
+    font-family: 'Playfair Display', serif; /* Or your logo font */
+}
+
+.editorial-title em {
+    font-style: italic;
+    font-weight: 300;
+}
+
+.text-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    color: #eee;
+    padding-right: 1.5rem;
+}
+
+/* The Wix-Style Button */
+.shop-btn {
+    display: inline-block;
+    padding: 18px 45px;
+    background-color: #fff;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.shop-btn:hover {
+    background-color: var(--brand-rose);
+    color: white;
+}
+
+/* THE OVERLAP LOGIC */
+.overlapping-image {
+    position: absolute;
+    left: -150px; /* Pushes the image 150px INTO the black section */
+    width: 840px; /* Large width to match the screenshot scale */
+    z-index: 10;
+}
+
+.overlapping-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+
+
+
+/* THE DISCOVER MORE SECTION */
+.discover-section {
+    background: linear-gradient(to bottom, #ffffff 65%, #000000 35%);
+    height: 125vh;
+    padding: 80px 0 150px 0;
+    text-align: center;
+}
+
+.discover-title {
+    font-family: var(--font-logo); /* Playfair or similar serif */
+    font-size: 3.8rem;
+    margin-bottom: 80px;
+    color: #000;
+}
+
+.discover-title em {
+    font-style: italic;
+    font-weight: 300;
+}
+
+.category-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    max-width: 1350px;
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+.cat-box {
+    flex: 1;
+    text-decoration: none;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1.4; 
+    overflow: hidden;
+    background-color: #f0f0f0;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* THE OVERLAP KEY: Pulling text down over the image edge */
+.cat-text {
+    margin-top: -90px; /* Pulls text UP into the image slightly */
+    transform: translateY(40px); /* Adjusts final resting place over the black */
+    color: #ffffff;
+    z-index: 5;
+    text-align: center;
+}
+
+.cat-shop-label {
+    display: block;
+    font-size: 14px;
+    letter-spacing: 4px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #ffffff;
+}
+
+.cat-name {
+    font-family: var(--font-logo);
+    font-size: 5rem; /* Large, bold impact */
+    line-height: 0.8;
+    margin: 0;
+    color: #ffffff;
+    /* Optional: Slight text shadow to ensure readability on lighter images */
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.2); 
+}
+
+
+
+
+
+/* THE PROMO BANNER SECTION */
+.promo-section {
+    background-color: #ffffff;
+    width: 100%;
+    position: relative;
+    overflow: visible; /* Allows the image to bleed out if needed */
+}
+
+.promo-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 1600px; /* Wide container to match the high-end feel */
+    margin: 0 auto;
+}
+
+.promo-fixed-image {
+    flex: 1.5; /* Keeps the size "as big as the photo" you sent */
+    height: 750px; /* Adjust this to make the section taller or shorter */
+    margin-top: -80px; /* Maintains that overlap into the black section */
+    
+    /* THE FIXED EFFECT */
+    background-image: url('/static/images/home_images/background3.jpg');
+    background-attachment: fixed;
+    
+    /* Optional: adds the slight shadow from the Wix template */
+    box-shadow: 15px 15px 50px rgba(0,0,0,0.1);
+}
+
+/* TEXT SIDE */
+.promo-content-container {
+    flex: 1; /* Takes up 40% of the row */
+    padding: 60px 5% 60px 8%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.promo-inner-text {
+    max-width: 480px; /* Keeps text from stretching too wide */
+}
+
+.promo-subtitle {
+    display: block;
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: #333;
+    margin-bottom: 25px;
+    font-family: sans-serif;
+}
+
+.promo-heading {
+    font-family: var(--font-logo); /* Use your serif brand font */
+    font-size: 5rem; /* Massive size like the screenshot */
+    line-height: 1.0;
+    margin-bottom: 30px;
+    color: #000;
+}
+
+.promo-heading em {
+    font-style: italic;
+    font-weight: 300;
+}
+
+.promo-inner-text p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 25px;
+}
+
+.promo-code-text {
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 45px !important;
+}
+
+/* The Ghost Button */
+.promo-button {
+    display: inline-block;
+    padding: 18px 55px;
+    border: 1px solid #000;
+    background: transparent;
+    color: #000;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.promo-button:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+
+
+
+/* PHILOSOPHY SECTION */
+.philosophy-section {
+    /* Use your burgundy texture image here */
+    background-image: url('/static/images/home_images/background4.jpg'); 
+    background-size: cover;
+    background-position: center;
+    padding: 200px 0;
+    color: #ffffff;
+    width: 100%;
+}
+
+.philosophy-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 50px;
+    align-items: flex-start;
+    gap: 80px;
+}
+
+.philosophy-header {
+    flex: 1;
+}
+
+.philosophy-subtitle {
+    display: block;
+    font-size: 14px;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.philosophy-title {
+    font-family: var(--font-logo); /* Your brand serif */
+    font-size: 4rem;
+    line-height: 1.1;
+}
+
+.philosophy-title em {
+    font-style: italic;
+    font-weight: 300;
+}
+
+.philosophy-content {
+    flex: 1.2;
+    padding-top: 20px;
+}
+
+.philosophy-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 500px;
+}
+
+/* The Underlined Link */
+.philosophy-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #ffffff;
+    padding-bottom: 5px;
+    transition: opacity 0.3s;
+}
+
+.philosophy-link:hover {
+    opacity: 0.7;
+}
+
+
+
+
+
+/* <!-- CAROUSEL SOCIAL FEED SECTION --> */
+.social-feed {
+    padding: 80px 0 0 0;
+    background: #fff;
+    text-align: center;
+}
+
+.social-header h2 {
+    font-family: var(--font-logo); /* Playfair Display */
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.social-header p {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 50px;
+}
+
+.carousel-container {
+    width: 100%;
+    overflow: hidden; /* Hides the images outside the screen */
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    width: calc(350px * 16); /* 8 images + 8 clones @ 250px each */
+    animation: scrollInfinite 20s linear infinite;
+}
+
+.slide {
+    width: 350px; /* Adjust size based on your preference */
+    height: 450px;
+    flex-shrink: 0;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Keeps faces and products from squishing */
+}
+
+/* THE LOOP ANIMATION */
+@keyframes scrollInfinite {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        /* Move the track left by exactly half its width */
+        transform: translateX(calc(-350px * 8)); 
+    }
+}
+
+/* Pause on hover so users can look at a specific photo */
+.carousel-track:hover {
+    animation-play-state: paused;
+}
+
+
+
+
+
+/* FOOTER SECTION */
+.main-footer {
+    background-color: #000;
+    color: #fff;
+    padding: 100px 0 60px 0;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+/* --- Newsletter Section --- */
+.footer-newsletter {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.newsletter-title {
+    font-family: 'Playfair Display', serif; /* Or your brand serif */
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+    font-weight: 400;
+}
+
+.newsletter-title em {
+    font-style: italic;
+    font-weight: 300;
+}
+
+.newsletter-sub {
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 40px;
+}
+
+.newsletter-form {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.input-field label {
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.input-field input {
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 12px;
+    width: 320px;
+    outline: none;
+}
+
+.footer-join-btn {
+    background: #fff;
+    color: #000;
+    border: 1px solid #fff;
+    padding: 12px 60px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.footer-join-btn:hover {
+    background: transparent;
+    color: #fff;
+}
+
+/* --- Divider --- */
+.footer-divider {
+    border: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin: 60px auto;
+    width: 90%;
+}
+
+/* --- Grid Section --- */
+.footer-grid {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 50px;
+}
+
+.footer-column {
+    flex: 1;
+}
+
+.footer-column h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 15px;
+}
+
+.footer-links a, .footer-info a, .footer-info p {
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 1.6;
+    opacity: 0.85;
+}
+
+.footer-links a:hover, .footer-info a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* --- Socials --- */
+.footer-socials {
+    margin: 30px 0;
+    display: flex;
+    gap: 20px;
+}
+
+.footer-socials a {
+    font-size: 1.5rem;
+    color: #fff;
+    transition: opacity 0.3s;
+}
+
+.footer-socials a:hover {
+    opacity: 0.6;
+}
+
+.footer-copy {
+    font-size: 12px;
+    margin-top: 50px;
+    opacity: 0.7;
+}

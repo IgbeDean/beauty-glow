@@ -1,0 +1,101 @@
+{% extends "admin/admin_layout.html" %}
+
+{% block title %}Product Management{% endblock %}
+
+{% block admin_content %}
+<div class="admin-action-header">
+    <div>
+        <h1 class="title-medium">Product Gallery</h1>
+        <p class="subtitle">You have {{ active_products|length }} items live in your store.</p>
+    </div>
+    <a href="{{ url_for('admin.add_product') }}" class="btn-main-admin"><i class="las la-plus"></i> Add New Product</a>
+</div>
+
+<div class="product-list-container">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Stock</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in active_products %}
+            <tr>
+                <td>
+                    <img src="{{ url_for('static', filename='images/product_images/' + product.image_file) }}" class="table-thumb">
+                </td>
+                <td>
+                    <div class="product-info">
+                        <span class="p-name">{{ product.name }}</span>
+                        <span class="p-sku">SKU: {{ "%.4d" % product.id }}</span>
+                    </div>
+                </td>
+                <td>{{ product.stock_count }} units</td>
+                <td>${{ "%.2f" % product.price }}</td>
+                <td>
+                    {% if product.stock_count > 10 %}
+                        <span class="badge badge-success">In Stock</span>
+                    {% elif product.stock_count > 0 %}
+                        <span class="badge badge-warning">Low Stock</span>
+                    {% else %}
+                        <span class="badge badge-danger">Sold Out</span>
+                    {% endif %}
+                </td>
+                <td class="table-actions">
+                    <a href="{{ url_for('admin.edit_product', product_id = product.id) }}" class="action-btn edit" title="Edit"><i class="las la-pen"></i></a>
+
+                    <button type="button" title="archive" class="action-btn archive" onclick="openArchiveModal('{{ product.id }}', '{{ product.name }}')">
+                        <i class="las la-archive"></i>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+
+<!-- archive model -->
+<div id="archiveModal" class="modal-overlay">
+    <div class="modal-content">
+        <div class="modal-icon"><i class="las la-exclamation-triangle"></i></div>
+        <h2>Archive Product?</h2>
+        <p>Are you sure you want to archive <strong id="modalProductName"></strong>? It will be hidden from the storefront immediately.</p>
+        
+        <form id="archiveForm" method="POST" action="">
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" onclick="closeArchiveModal()">Cancel</button>
+                <button type="submit" class="btn-archive-confirm">Confirm Archive</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+<!-- js for the archive model -->
+<script>
+    function openArchiveModal(productId, productName) {
+        const modal = document.getElementById('archiveModal');
+        const form = document.getElementById('archiveForm');
+        const nameSpan = document.getElementById('modalProductName');
+        
+        nameSpan.innerText = productName;
+        form.action = "/admin/product/" + productId + "/archive"; // Match your route
+        
+        modal.style.display = 'flex';
+    }
+
+    function closeArchiveModal() {
+        document.getElementById('archiveModal').style.display = 'none';
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,302 @@
+{% extends "main/layout.html" %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+{% block content %}
+
+    <!-- Home Introduction -->
+    <section class="hero-intro">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h3 class="hero-subtitle">New Release</h3>
+                <h1 class="hero-title">Metallics <span>Shine</span>on</h1>
+                <p class="hero-description">
+                    Get to know our new eyeshadow palettes with a glossy finish, 
+                    smooth lightweight feel and 10 hour stay-on.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="{{ url_for('main.shop') }}" class="btn-primary">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- BEST SELLERS SECTION -->
+    <section class="bestsellers">
+        <div class="container">
+            <h3>Must Have</h3>
+            <h2 class="section-title">Best <span>Sellers</span></h2>
+            
+            <div class="product-grid">
+                {% for product in bestsellers %}
+                <div class="product-card">
+                    <div class="product-image-wrapper">
+                        <span class="badge">Best Seller</span>
+                        <img src="{{ url_for('static', filename='images/product_images/' + product.image_file) }}" alt="{{ product.name }}">
+
+                        <div class="product-overlay">
+                            <button class="btn-quick-add">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-details">
+                        <h3>{{ product.name }}</h3>
+                        <p class="price">${{ "%.2f"|format(product.price) }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="section-footer">
+                <a href="{{ url_for('main.shop', category_name='best-sellers') }}" class="btn-outline">Shop Best Sellers</a>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- FEATURE HIGHLIGHT SECTION -->
+    <section class="editorial-feature">
+        <div class="black-column">
+            <div class="text-content">
+                <span class="hot-label">HOT & SPICY</span>
+                <h2 class="editorial-title">Most <em>Vibrant</em> <br> Lips in Town</h2>
+                <p>I'm a paragraph. Click here to add your own text and edit me. I’m a great place for you to tell a story and let your users know a little more about you.</p>
+                <a href="{{ url_for('main.shop', category_name='lips') }}" class="shop-btn">Shop Lips</a>
+            </div>
+        </div>
+
+        <div class="white-column">
+            <div class="overlapping-image">
+                <img src="{{ url_for('static', filename='images/home_images/background2.jpg') }}" alt="Lipsticks">
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- TRENDING SECTION -->
+    <section class="bestsellers">
+        <div class="container">
+            <h3>DON'T MISS OUT</h3>
+            <h2 class="section-title">NOW <span>Trending</span></h2>
+            
+            <div class="product-grid">
+                {% for product in trending %}
+                <div class="product-card">
+                    <div class="product-image-wrapper">
+                        <img src="{{ url_for('static', filename='images/product_images/' + product.image_file) }}" alt="{{ product.name }}">
+
+                        <div class="product-overlay">
+                            <button class="btn-quick-add">Add to Cart</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-details">
+                        <h3>{{ product.name }}</h3>
+                        <p class="price">${{ "%.2f"|format(product.price) }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </section>
+
+
+
+
+    <!-- DISCOVER SECTION -->
+    <section class="discover-section">
+        <h2 class="discover-title">Discover <em>More</em></h2>
+        
+        <div class="category-container">
+            <a href="{{ url_for('main.shop', category_name='eyes') }}" class="cat-box">
+                <div class="image-wrapper">
+                    <img src="{{ url_for('static', filename='images/home_images/shop_eyes.jpg') }}" alt="Eyes">
+                </div>
+                <div class="cat-text">
+                    <span class="cat-shop-label">SHOP</span>
+                    <h3 class="cat-name">EYES</h3>
+                </div>
+            </a>
+
+            <a href="{{ url_for('main.shop', category_name='face') }}" class="cat-box">
+                <div class="image-wrapper">
+                    <img src="{{ url_for('static', filename='images/home_images/shop_face.jpg') }}" alt="Face">
+                </div>
+                <div class="cat-text">
+                    <span class="cat-shop-label">SHOP</span>
+                    <h3 class="cat-name">FACE</h3>
+                </div>
+            </a>
+
+            <a href="{{ url_for('main.shop', category_name='lips') }}" class="cat-box">
+                <div class="image-wrapper">
+                    <img src="{{ url_for('static', filename='images/home_images/shop_lips.jpg') }}" alt="Lips">
+                </div>
+                <div class="cat-text">
+                    <span class="cat-shop-label">SHOP</span>
+                    <h3 class="cat-name">LIPS</h3>
+                </div>
+            </a>
+        </div>
+    </section>
+
+
+
+
+    <!-- PROMO BANNER SECTION -->
+    <section class="promo-section">
+        <div class="promo-wrapper">
+            <div class="promo-fixed-image"></div>
+
+            <div class="promo-content-container">
+                <div class="promo-inner-text">
+                    <span class="promo-subtitle">THIS WEEKEND ONLY</span>
+                    <h2 class="promo-heading">15% Off <em>Sitewide</em></h2>
+                    <p>I'm a paragraph. Click here to add your own text and edit me. I’m a great place for you to tell a story and let your users know a little more about you.</p>
+                    <p class="promo-code-text">Use code <strong>LOVE15</strong> at checkout</p>
+                    <a href="{{ url_for('main.shop') }}" class="promo-button">Shop All</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- PHILOSOPHY SECTION -->
+    <section class="philosophy-section">
+        <div class="philosophy-container">
+            <div class="philosophy-header">
+                <span class="philosophy-subtitle">WE BELIEVE</span>
+                <h2 class="philosophy-title">Your <em>Skin</em> <br> Comes First</h2>
+            </div>
+
+            <div class="philosophy-content">
+                <p>I'm a paragraph. Click here to add your own text and edit me. It’s easy. Just click “Edit Text” or double click me to add your own content and make changes to the font. Feel free to drag and drop me anywhere you like on your page.</p>
+                
+                <p>This is a great space to write a long text about your company and your services. Tell your visitors the story of how you came up with the idea for your business and what makes you different from your competitors.</p>
+                
+                <a href="#" class="philosophy-link">Join Noelle's Club</a>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- CAROUSEL SOCIAL FEED SECTION -->
+    <section class="social-feed">
+        <div class="social-header">
+            <h2>Follow Us</h2>
+            <p>@beauty.store</p>
+        </div>
+
+        <div class="carousel-container">
+            <div class="carousel-track">
+                <div class="slide"><img src="{{ url_for('static', filename = 'images/home_images/01.jpg') }}" alt=""></div>
+                <div class="slide"><img src="{{ url_for('static', filename = 'images/home_images/02.jpg') }}" alt=""></div>
+                <div class="slide"><img src="{{ url_for('static', filename = 'images/home_images/03.jpg') }}" alt=""></div>
+                <div class="slide"><img src="{{ url_for('static', filename = 'images/home_images/04.jpg') }}" alt=""></div>
+                <div class="slide"><img src="{{ url_for('static', filename = 'images/home_images/05.jpg') }}" alt=""></div>
+                <div class="slide"><img src="{{ url_for('static', filename = 'images/home_images/06.jpg') }}" alt=""></div>
+                <div class="slide"><img src="{{ url_for('static', filename = 'images/home_images/07.jpg') }}" alt=""></div>
+                <div class="slide"><img src="{{ url_for('static', filename = 'images/home_images/08.jpg') }}" alt=""></div>
+
+                <div class="slide"><img src="{{ url_for('static', filename = 'images/home_images/01.jpg') }}" alt=""></div>
+                <div class="slide"><img src="{{ url_for('static', filename = 'images/home_images/02.jpg') }}" alt=""></div>
+                <div class="slide"><img src="{{ url_for('static', filename = 'images/home_images/03.jpg') }}" alt=""></div>
+                <div class="slide"><img src="{{ url_for('static', filename = 'images/home_images/04.jpg') }}" alt=""></div>
+                <div class="slide"><img src="{{ url_for('static', filename = 'images/home_images/05.jpg') }}" alt=""></div>
+                <div class="slide"><img src="{{ url_for('static', filename = 'images/home_images/06.jpg') }}" alt=""></div>
+                <div class="slide"><img src="{{ url_for('static', filename = 'images/home_images/07.jpg') }}" alt=""></div>
+                <div class="slide"><img src="{{ url_for('static', filename = 'images/home_images/08.jpg') }}" alt=""></div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <!-- FOOTER SECTION -->
+    <footer class="main-footer">
+    <div class="footer-newsletter">
+        <h2 class="newsletter-title">Are you on <em>the list?</em></h2>
+        <p class="newsletter-sub">Join to get exclusive offers & discounts</p>
+        
+        <form class="newsletter-form">
+            <div class="input-field">
+                <label for="email">Email *</label>
+                <input type="email" id="email" required>
+            </div>
+            <button type="submit" class="footer-join-btn">Join</button>
+        </form>
+    </div>
+
+    <hr class="footer-divider">
+
+    <div class="footer-grid">
+        <div class="footer-column">
+            <h3>Shop</h3>
+            <ul class="footer-links">
+                <li><a href="{{ url_for('main.shop') }}">All Products</a></li>
+                <li><a href="{{ url_for('main.shop', category_name='new') }}">New</a></li>
+                <li><a href="{{ url_for('main.shop', category_name='best-sellers') }}">Best Sellers</a></li>
+                <li><a href="{{ url_for('main.shop', category_name='lips') }}">Lips</a></li>
+                <li><a href="{{ url_for('main.shop', category_name='eyes') }}">Eyes</a></li>
+                <li><a href="{{ url_for('main.shop', category_name='face') }}">Face</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Our Store</h3>
+            <div class="footer-info">
+                <p>500 Terry Francine Street</p>
+                <p>San Francisco, CA 94158</p>
+                <br>
+                <p>Monday-Friday: 11am-10pm</p>
+                <p>Saturday-Sunday: 11am-12pm</p>
+                <br>
+                <p>Tel: <a href="tel:1234567890">123-456-7890</a></p>
+                <p>Email: <a href="mailto:info@mysite.com">info@mysite.com</a></p>
+            </div>
+        </div>
+
+        <div class="footer-column">
+            <h3>Policy</h3>
+            <ul class="footer-links">
+                <li><a href="#">Shipping & Returns</a></li>
+                <li><a href="#">Store Policy</a></li>
+                <li><a href="#">Payment Methods</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-column">
+            <h3>Customer Service</h3>
+            <div class="footer-info">
+                <p>Tel: <a href="tel:1234567890">123-456-7890</a></p>
+                <p>Email: <a href="mailto:info@mysite.com">info@mysite.com</a></p>
+            </div>
+
+            <div class="footer-socials">
+                <a href="#" aria-label="Instagram"><i class="lab la-instagram"></i></a>
+                <a href="#" aria-label="Facebook"><i class="lab la-facebook-f"></i></a>
+                <a href="#" aria-label="YouTube"><i class="lab la-youtube"></i></a>
+                <a href="#" aria-label="Twitter"><i class="lab la-twitter"></i></a>
+            </div>
+
+            <p class="footer-copy">© 2035 by Beauty. Powered and secured by Igbe Dean</p>
+        </div>
+    </div>
+</footer>
+    
+{% endblock content %}

@@ -1,0 +1,69 @@
+{% extends "admin/admin_layout.html" %}
+
+{% block title %}Overview{% endblock %}
+
+{% block admin_content %}
+<div class="dashboard-header">
+    <h1 class="title-medium">Command Center</h1>
+    <p class="subtitle">Real-time snapshot of your boutique.</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon"><i class="las la-users"></i></div>
+        <div class="stat-info">
+            <h3>Customers</h3>
+            <p class="stat-value">{{ stats.users }}</p>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon"><i class="las la-tshirt"></i></div>
+        <div class="stat-info">
+            <h3>Products</h3>
+            <p class="stat-value">{{ stats.products }}</p>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon"><i class="las la-star"></i></div>
+        <div class="stat-info">
+            <h3>Reviews</h3>
+            <p class="stat-value">{{ stats.reviews }}</p>
+        </div>
+    </div>
+</div>
+
+<div class="activity-section">
+    <div class="section-header">
+        <h2>Recent Reviews</h2>
+        <a href="#" class="btn-text">View All <i class="las la-arrow-right"></i></a>
+    </div>
+    <div class="admin-table-wrapper">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Product</th>
+                    <th>Rating</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for review in recent_reviews %}
+                <tr>
+                    <td><strong>{{ review.author.full_name }}</strong></td>
+                    <td>{{ review.product_review.name }}</td>
+                    <td class="stars-cell">{{ "★" * review.rating }}</td>
+                    <td>{{ review.date_posted.strftime('%b %d') }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" style="text-align:center; padding: 40px; color: #999;">No recent reviews to show.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

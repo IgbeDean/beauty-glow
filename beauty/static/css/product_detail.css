@@ -1,0 +1,491 @@
+:root {
+    --brand-rose: #634141;   /* Main Background */
+    --brand-extra: #d59090;  /* Glow Accent */
+    --brand-black: #000000;
+    --brand-text: rgb(80, 80, 80);
+    --white: #ffffff;
+    --font-main: system-ui, -apple-system, sans-serif;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+.pdp-outer-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 120px 20px 60px 20px;
+    font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+/* Breadcrumb Nav */
+.pdp-top-nav {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    color: #888;
+    margin-bottom: 40px;
+}
+
+.pdp-top-nav a { text-decoration: none; color: inherit; }
+
+.pdp-main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+}
+
+/* Image Section */
+.pdp-image-container .main-image-box {
+    border: 1px solid #eee;
+    padding: 40px;
+    text-align: center;
+}
+
+.main-image-box img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+
+.pdp-short-desc {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Details Section */
+.product-title-header {
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.sku-text {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 20px;
+}
+
+.product-price-large {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.quantity-selector label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.qty-input-row input {
+    width: 80px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 30px;
+}
+
+/* Buttons */
+.pdp-action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.cart-row {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-add-cart {
+    flex: 1;
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    width: 490px;
+}
+
+.btn-wishlist {
+    background: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 2rem;
+    transition: all 0.3s ease;
+    width: 50px;
+}
+
+.btn-wishlist:hover {
+    border-color: var(--brand-black);
+    transform: scale(1.1);
+}
+
+.heart-icon {
+    transition: color 0.3s ease;
+}
+
+.in-wishlist .heart-icon {
+    color: var(--brand-extra); /* Or your preferred accent color */
+}
+
+.btn-buy-now {
+    background: #000;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+}
+
+/* Styling the Accordion Headers */
+.pdp-accordion-group details {
+    border-bottom: 1px solid #e5e5e5; /* Light grey lines like the image */
+}
+
+.pdp-accordion-group summary {
+    list-style: none; /* Remove default arrow */
+    padding: 18px 0;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #1a1a1a;
+}
+
+/* Custom Plus Sign */
+.pdp-accordion-group summary::after {
+    content: '+';
+    font-size: 18px;
+    font-weight: 300;
+    color: #888;
+    transition: transform 0.3s ease;
+}
+
+/* Rotate the plus to an 'x' when open */
+.pdp-accordion-group details[open] summary::after {
+    transform: rotate(45deg);
+    color: #000;
+}
+
+/* The Content Box */
+.details-inner {
+    padding: 0 0 25px 0;
+    font-size: 14px;
+    color: #555;
+    line-height: 1.8; /* Tall line height for beauty/luxury feel */
+}
+
+.ingredients-text {
+    font-style: italic;
+    font-size: 13px;
+    color: #777;
+}
+
+/* Remove default arrows for Safari */
+.pdp-accordion-group summary::-webkit-details-marker {
+    display: none;
+}
+
+
+
+/* Reviews Section */
+/* --- SECTION CONTAINER --- */
+.pdp-reviews-section {
+    max-width: 850px;
+    margin: 100px auto;
+    padding: 0 20px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #333;
+}
+
+/* --- HEADER STYLE --- */
+.reviews-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.title-medium {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    color: #1a1a1a;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #777;
+    margin-bottom: 30px;
+    font-weight: 300;
+}
+
+/* --- THE TOGGLE BUTTON --- */
+#toggle-review-btn {
+    background: transparent;
+    color: #1a1a1a;
+    border: 1.5px solid #1a1a1a;
+    padding: 14px 40px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#toggle-review-btn:hover {
+    background: #1a1a1a;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+/* --- THE REVIEW FORM (ALIVE & MODERN) --- */
+#review-form-wrapper {
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    padding: 50px;
+    margin: 40px 0 80px 0;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+    border-radius: 12px;
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.title-small {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 30px;
+    color: #1a1a1a;
+}
+
+.input-group {
+    margin-bottom: 25px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+/* Form Inputs Styling */
+.form-input, 
+#review-form-wrapper textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    background: #fafafa;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.form-input:focus, 
+#review-form-wrapper textarea:focus {
+    outline: none;
+    border-color: #1a1a1a;
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(0,0,0,0.02);
+}
+
+/* FORM BUTTONS */
+.form-buttons {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.form-buttons .btn-main {
+    flex: 2;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    padding: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.btn-cancel {
+    flex: 1;
+    background: #f5f5f5;
+    color: #666;
+    border: none;
+    padding: 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-cancel:hover {
+    background: #e0e0e0;
+    color: #333;
+}
+
+/* --- THE REVIEWS LIST --- */
+.reviews-list {
+    margin-top: 20px;
+}
+
+.review-item {
+    padding: 35px 0;
+    border-bottom: 1px solid #eee;
+    transition: transform 0.3s ease;
+}
+
+.review-item:hover {
+    transform: translateX(5px);
+}
+
+.review-meta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.review-author {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #111;
+}
+
+.review-stars {
+    color: #f39c12; /* Warm Golden Orange */
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+}
+
+.review-date {
+    font-size: 0.9rem;
+    color: #999;
+    margin-left: auto; /* Pushes date to the right */
+}
+
+.review-content {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #4a4a4a;
+    font-weight: 400;
+}
+
+/* --- EMPTY MESSAGE --- */
+.reviews-header h2:only-child {
+    color: #bbb;
+    font-style: italic;
+}
+
+
+
+
+/* Recommendation Slider */
+.pdp-recommendations {
+    max-width: 1200px;
+    margin: 0 auto 100px auto;
+    padding: 0 20px;
+}
+
+.rec-title {
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 40px;
+}
+
+.rec-slider-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.rec-track {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Hide scrollbar Firefox */
+}
+
+.rec-track::-webkit-scrollbar { display: none; } /* Hide scrollbar Chrome/Safari */
+
+.rec-item {
+    min-width: calc(20% - 16px); /* Shows 5 items */
+    text-decoration: none;
+    color: #000;
+    text-align: center;
+}
+
+.rec-img-box {
+    aspect-ratio: 1/1;
+    margin-bottom: 15px;
+}
+
+.rec-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.rec-name {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.rec-price {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Arrows */
+.slider-arrow {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    color: #ccc;
+    transition: color 0.3s;
+}
+
+.slider-arrow:hover { color: #000; }
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-right a {
+    text-decoration: none;
+    color: #111;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.nav-right a:hover {
+    color: #b5838d; /* Your brand accent color */
+}
+
+.nav-divider {
+    color: #eee;
+}
+
+.disabled-nav {
+    color: #ccc;
+    cursor: not-allowed;
+    pointer-events: none;
+}

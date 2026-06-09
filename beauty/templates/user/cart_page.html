@@ -1,0 +1,89 @@
+{% extends "main/layout.html" %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart_page.css') }}">
+{% endblock %}
+
+
+ {% block content %}
+   <section class="cart-page-section">
+        <div class="cart-container">
+            <header class="cart-header">
+                <h1 class="editorial-title">Your Beauty Bag</h1>
+                <span class="item-count-header">{{ cart.items|length }} Items</span>
+            </header>
+
+            {% if cart and cart.items %}
+            <div class="cart-grid">
+                <div class="cart-items-wrapper">
+                    {% for item in cart.items %}
+                    <div class="cart-card" data-item-id="{{ item.id }}">
+                        <div class="cart-card-main">
+                            <div class="product-thumb">
+                                <img src="{{ url_for('static', filename='images/product_images/' + item.product.image_file) }}" alt="">
+                            </div>
+                            <div class="product-info">
+                                <div class="info-top">
+                                    <p class="category-tag">{{ item.product.category }}</p>
+                                    <h3 class="product-name">{{ item.product.name }}</h3>
+                                </div>
+                                
+                                <div class="info-bottom">
+                                    <div class="price-display">
+                                        <span class="unit-price">${{ "{:,.2f}".format(item.product.price) }}</span>
+                                        <div class="qty-selector">
+                                            <button type="button" class="qty-btn minus" data-id="{{ item.id }}">&#8722;</button>
+                                            <span class="qty-value" id="qty-{{ item.id }}">{{ item.quantity }}</span>
+                                            <button type="button" class="qty-btn plus" data-id="{{ item.id }}">&#43;</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cart-card-actions">
+                            <span class="row-total">${{ "{:,.2f}".format(item.product.price * item.quantity) }}</span>
+                            <form class="ajax-remove-form" action="{{ url_for('user.remove_from_cart', item_id=item.id) }}" method="POST">
+                                <button type="submit" class="text-link-btn">Remove</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <aside class="cart-summary-sidebar">
+                    <div class="summary-box">
+                        <h2 class="summary-title">Order Summary</h2>
+                        <div class="summary-details">
+                            <div class="line-item">
+                                <span>Subtotal</span>
+                                <span class="cart-total-display">${{ "{:,.2f}".format(cart.total_price) }}</span>
+                            </div>
+                            <div class="line-item">
+                                <span>Shipping</span>
+                                <span class="free-text">Complimentary</span>
+                            </div>
+                            <div class="line-item total-line">
+                                <span>Total</span>
+                                <span class="cart-total-display">${{ "{:,.2f}".format(cart.total_price) }}</span>
+                            </div>
+                        </div>
+                        <button class="primary-black-btn">Checkout Now</button>
+                        <a href="{{ url_for('main.shop') }}" class="secondary-outline-link">Back to Shop</a>
+                    </div>
+                </aside>
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-state-content">
+                    <div class="empty-icon">×</div> <h2 class="empty-title">Your Bag is Empty</h2>
+                    <p class="empty-text">It looks like you haven't added any beauty favorites yet. Your bag is waiting to be filled with something special.</p>
+                    <div class="empty-actions">
+                        <a style="text-decoration: none;" href="{{ url_for('main.shop') }}" class="primary-black-btn">Explore the Collection</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+ {% endblock content %}

@@ -1,0 +1,281 @@
+{% extends "main/layout.html" %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+
+{% block content %}
+    <section class="profile-page">
+        <div class="profile-container">
+            
+            <header class="profile-header">
+                <div class="user-identity">
+                    <div class="profile-img-wrapper">
+                        <img src="{{ url_for('static', filename='images/user_profile_pics/' + current_user.image_file) }}" alt="Profile Picture" class="account-img">
+                        <label for="picture" class="upload-label" title="Update Photo">
+                            <i class="fas fa-camera"></i>
+                        </label>
+                    </div>
+                    <div class="name-block">
+                        <h1 class="user-full-name">{{ current_user.first_name }} {{ current_user.last_name }}</h1>
+                        <p class="member-since">Member Since {{ current_user.date_joined.strftime('%Y') if current_user.date_joined else '2024' }}</p>
+                    </div>
+                </div>
+            </header>
+
+            <div class="profile-grid">
+
+                <aside class="profile-sidebar">
+                    <nav class="profile-nav">
+                        <a href="javascript:void(0)" class="nav-link active" data-section="account-details">Account Details</a>
+                        <a href="javascript:void(0)" class="nav-link" data-section="order-history">Order History</a>
+                        <a href="javascript:void(0)" class="nav-link" data-section="addresses">Addresses</a>
+                        <a href="javascript:void(0)" class="nav-link" data-section="wishlist">Wishlist</a>
+                        <hr class="nav-divider">
+                        <a href="{{ url_for('auth.logout') }}" class="nav-link logout">Sign Out</a>
+                    </nav>
+                </aside>
+
+
+                <main class="profile-content">
+
+                    <!-- ACCOUNT UPDATE SECTION -->
+                    <div id="account-details" class="profile-section-content active">
+                        <div class="form-card">
+                            <h2 class="card-title">Personal Information</h2>
+                            <form method="POST" action="" enctype="multipart/form-data" class="editorial-form">
+                                {{ form.hidden_tag() }}
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        {{ form.first_name.label }}
+                                        {{ form.first_name(class="form-input") }}
+                                    </div>
+                                    <div class="form-group">
+                                        {{ form.last_name.label }}
+                                        {{ form.last_name(class="form-input") }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    {{ form.email.label }}
+                                    {{ form.email(class="form-input") }}
+                                </div>
+
+                                <div class="form-group picture-upload-group">
+                                    {{ form.picture.label }}
+                                    {{ form.picture(class="form-input-file") }}
+                                </div>
+
+                                <div class="form-actions">
+                                    {{ form.submit(class="primary-black-btn") }}
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+                    <!-- USER ORDER HISTORY SECTION -->
+                    <div id="order-history" class="profile-section-content">
+                        <div class="form-card">
+                            <h2 class="card-title">Order History</h2>
+                            <p class="empty-msg">No orders placed yet.</p>
+                        </div>
+                    </div>
+
+
+
+
+                    <!-- USER SHOPPING ADDRESS SECTION -->
+                    <div id="addresses" class="profile-section-content">
+                        <div class="form-card">
+                            <div class="card-header-flex">
+                                <h2 class="card-title">Saved Addresses</h2>
+                                <button class="add-address-trigger" onclick="toggleAddressForm()">+ Add New</button>
+                            </div>
+
+                            <div class="address-grid">
+                                {% if addresses %}
+                                    {% for addr in addresses %}
+                                        <div class="address-card {% if addr.is_default %}default-active{% endif %}">
+                                            {% if addr.is_default %}
+                                                <span class="default-badge">DEFAULT</span>
+                                            {% endif %}
+                                            <div class="address-details">
+                                                <p class="addr-name">{{ addr.full_name }}</p>
+                                                <p>{{ addr.address_line_1 }}{% if addr.address_line_2 %}, {{ addr.address_line_2 }}{% endif %}</p>
+                                                <p>{{ addr.city }}, {{ addr.state }} {{ addr.postal_code }}</p>
+                                                <p class="addr-phone">{{ addr.phone_number }}</p>
+                                            </div>
+                                            <div class="address-footer">
+                                                <form action="{{ url_for('user.delete_address', address_id=addr.id) }}" method="POST">
+                                                    <button type="submit" class="delete-link" onclick="return confirm('Remove this address?')">Delete</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <p class="empty-msg">You have no saved addresses yet.</p>
+                                {% endif %}
+                            </div>
+
+                            <div id="address-form-container" class="slide-down-form" style="display:none;">
+                                <hr class="form-divider">
+                                <h3 class="card-title">New Address</h3>
+                                <form method="POST" action="">
+                                    {{ address_form.hidden_tag() }}
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">{{ address_form.full_name.label }} {{ address_form.full_name(placeholder="Receiver's Name") }}</div>
+                                        <div class="form-group">{{ address_form.phone_number.label }} {{ address_form.phone_number(placeholder="+234...") }}</div>
+                                    </div>
+
+                                    <div class="form-group">{{ address_form.address_line_1.label }} {{ address_form.address_line_1(placeholder="Street address") }}</div>
+                                    <div class="form-group">{{ address_form.address_line_2.label }} {{ address_form.address_line_2(placeholder="Apartment, suite, etc (optional)") }}</div>
+
+                                    <div class="form-row-triple">
+                                        <div class="form-group">{{ address_form.city.label }} {{ address_form.city() }}</div>
+                                        <div class="form-group">{{ address_form.state.label }} {{ address_form.state() }}</div>
+                                        <div class="form-group">{{ address_form.postal_code.label }} {{ address_form.postal_code() }}</div>
+                                    </div>
+
+                                    <div class="form-check">
+                                        {{ address_form.is_default() }} {{ address_form.is_default.label }}
+                                    </div>
+
+                                    <div class="form-actions">
+                                        <button type="submit" name="submit_address" class="primary-black-btn">Save Address</button>
+                                        <button type="button" class="cancel-btn" onclick="toggleAddressForm()">Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- USER WISHLIST SECTION -->
+                    <div id="wishlist" class="profile-section-content">
+                        <div class="form-card">
+                            <h2 class="card-title">My Wishlist</h2>
+                            
+                            <div class="wishlist-container">
+                                {% if wishlist_items %}
+                                    {% for item in wishlist_items %}
+                                        <div class="wishlist-row" id="wish-row-{{ item.product.id }}">
+                                            <div class="wishlist-product">
+                                                <img src="{{ url_for('static', filename='images/product_images/' + item.product.image_file) }}" alt="">
+                                                <div class="wishlist-info">
+                                                    <h3>{{ item.product.name }}</h3>
+                                                    <p class="price">${{ item.product.price }}</p>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="wishlist-actions">
+                                                <form action="{{ url_for('user.add_to_cart', product_id=item.product.id) }}" method="POST">
+                                                    <button type="submit" class="wishlist-cart-btn">Add to Cart</button>
+                                                </form>
+                                                <button class="wishlist-remove-btn" onclick="handleWishlistToggleFromProfile('{{ item.product.id }}')">
+                                                    <i class="las la-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="empty-wishlist">
+                                        <p>Your wishlist is currently empty.</p>
+                                        <a href="{{ url_for('main.shop') }}" class="primary-black-btn" style="display:inline-block; width:auto; margin-top:20px; text-decoration: none;">Explore Products</a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                </main>
+
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- // this is for the profile page slider effect -->
+     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link[data-section]');
+            const sections = document.querySelectorAll('.profile-section-content');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Prevent any weird jumps
+                    e.preventDefault();
+                    
+                    const sectionId = this.getAttribute('data-section');
+                    
+                    // 1. Update Navigation UI
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // 2. Hide ALL sections
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                        // We use the class to handle the display via CSS
+                    });
+
+                    // 3. Show the CLICKED section
+                    const activeSection = document.getElementById(sectionId);
+                    if (activeSection) {
+                        activeSection.classList.add('active');
+                    }
+                });
+            });
+        });
+
+
+
+
+        // FUNCTION TO HANDLE WISHLIST TOGGLE EFFECT
+        function handleWishlistToggleFromProfile(productId) {
+            fetch(`/wishlist/toggle/${productId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.status === 'removed') {
+                    const row = document.getElementById(`wish-row-${productId}`);
+                    row.style.opacity = '0';
+                    row.style.transform = 'translateX(20px)';
+                    setTimeout(() => row.remove(), 400);
+                }
+            });
+        }
+
+
+
+        // function to handle the address toggle effect
+        function toggleAddressForm() {
+            const formContainer = document.getElementById('address-form-container');
+            const triggerBtn = document.querySelector('.add-address-trigger');
+            
+            if (formContainer.style.display === 'none') {
+                formContainer.style.display = 'block';
+                triggerBtn.innerText = 'Close';
+                formContainer.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                formContainer.style.display = 'none';
+                triggerBtn.innerText = '+ Add New';
+            }
+        }
+    </script>
+{% endblock content %}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique Admin | {% block title %}{% endblock %}</title>
+
+    <!-- link to google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- LINK TO FONT ICONS -->
+    <link rel= "stylesheet" href= "https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" >
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+
+    <div class="admin-wrapper">
+        <aside class="admin-sidebar">
+            <div class="sidebar-brand">
+                <h2>BOUTIQUE <span>ADMIN</span></h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="{{ url_for('admin.dashboard') }}" class="nav-link {{ 'active' if request.endpoint == 'admin.dashboard' }} ">
+                            <i class="las la-chart-pie"></i> Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin.manage_product') }}" class="nav-link {{ 'active' if request.endpoint == 'admin.manage_product' }}">
+                            <i class="las la-tshirt"></i> Products
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">
+                            <i class="las la-shopping-cart"></i> Orders
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">
+                            <i class="las la-star"></i> Reviews
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-link">
+                            <i class="las la-users"></i> Customers
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin.archived_products') }}" class="nav-link {{ 'active' if request.endpoint == 'admin.archived_products' }}">
+                            <i class="las la-archive"></i> Archive
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar-footer">
+                <a href="{{ url_for('main.shop') }}">
+                    <i class="las la-external-link-alt"></i> View Shop
+                </a>
+            </div>
+        </aside>
+
+        <div class="admin-content">
+
+            <header class="admin-top-bar">
+                <div class="search-wrapper">
+                    <i class="las la-search"></i>
+                    <input type="search" placeholder="Search orders, products, customers...">
+                </div>
+                
+                <div class="admin-user-info">
+                    <div class="admin-details">
+                        <span class="admin-name">{{ current_user.full_name }}</span>
+                        <span class="admin-role">{{ current_user.role|capitalize }}</span>
+                    </div>
+                    <div class="admin-avatar-wrapper">
+                        {% if current_user.image_file %}
+                            <img src="{{ url_for('static', filename='images/user_profile_pics/' + current_user.image_file) }}" alt="Admin Profile" class="admin-avatar">
+                        {% else %}
+                            <img src="https://ui-avatars.com/api/?name={{ current_user.full_name }}&background=111&color=fff" alt="Admin" class="admin-avatar">
+                        {% endif %}
+                    </div>
+                </div>
+            </header>
+
+            <main class="admin-view">
+
+
+                <!-- FLASH MESSAGES -->
+                <div class="flash-messages-container">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="custom-alert alert-{{ category }}">
+                                    <span>{{ message }}</span>
+                                    <button type="button" style="background:none; border:none; cursor:pointer; opacity:0.5;" onclick="this.parentElement.remove()">
+                                        <i class="las la-times"></i>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+
+
+
+                {% block admin_content %}{% endblock %}
+
+            </main>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        // FLASH MESSAGES TRIGGER WITH JS
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. Define the hide logic once
+            const setupAutoHide = (alert) => {
+                setTimeout(() => {
+                    alert.classList.add('hiding');
+                    setTimeout(() => alert.remove(), 500);
+                }, 3000);
+            };
+
+            // 2. Apply it to any messages already on the page (from Flask/Jinja)
+            const existingAlerts = document.querySelectorAll('.custom-alert');
+            existingAlerts.forEach(setupAutoHide);
+
+            // 3. Define the global helper for your AJAX "Magic"
+            window.showFlashMessage = function(message, category) {
+                const container = document.querySelector('.flash-messages-container');
+                if (!container) return;
+
+                const alert = document.createElement('div');
+                alert.className = `custom-alert alert-${category}`;
+                alert.innerHTML = `<span>${message}</span>`;
+                
+                container.appendChild(alert);
+                
+                // Use the same hide logic here
+                setupAutoHide(alert);
+            };
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+{% extends "admin/admin_layout.html" %}
+
+{% block title %}{{ 'Edit Product' if product else 'New Beauty Listing' }}{% endblock %}
+
+{% block admin_content %}
+<div class="admin-composer">
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        
+        <header class="composer-header">
+            <div class="header-left">
+                <a href="{{ url_for('admin.manage_product') }}" class="back-link"><i class="las la-arrow-left"></i> Products</a>
+                <h1 class="title-medium">{{ 'Edit "' + product.name + '"' if product else 'New Beauty Listing' }}</h1>
+            </div>
+            <div class="header-actions">
+                <a href="{{ url_for('admin.manage_product') }}" class="btn-secondary">Discard</a>
+                {{ form.submit(class="btn-main-admin") }}
+            </div>
+        </header>
+
+        <div class="composer-grid">
+            <div class="composer-main">
+                <section class="composer-section">
+                    <h3 class="section-label">Product Identity</h3>
+                    <div class="form-group">
+                        <label>Product Name</label>
+                        {{ form.name(class="admin-input-lg" + (" is-invalid" if form.name.errors else ""), placeholder="e.g. Velvet Rose Lip Stain") }}
+                        {% for error in form.name.errors %}<span class="invalid-feedback">{{ error }}</span>{% endfor %}
+                    </div>
+                    <div class="form-group">
+                        <label>Full Description</label>
+                        {{ form.full_description(class="admin-textarea" + (" is-invalid" if form.full_description.errors else ""), placeholder="Describe the texture, finish, and feel...", rows="6") }}
+                        {% for error in form.full_description.errors %}<span class="invalid-feedback">{{ error }}</span>{% endfor %}
+                    </div>
+                </section>
+
+                <section class="composer-section">
+                    <h3 class="section-label">Beauty Specifications</h3>
+                    <div class="form-group">
+                        <label><i class="las la-flask"></i> Ingredients</label>
+                        {{ form.ingredients(class="admin-textarea", placeholder="Aqua, Glycerin, ...", rows="4") }}
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label><i class="las la-magic"></i> Benefits</label>
+                            {{ form.benefits(class="admin-textarea", placeholder="What it does...", rows="4") }}
+                        </div>
+                        <div class="form-group">
+                            <label><i class="las la-hand-sparkles"></i> Usage</label>
+                            {{ form.usage(class="admin-textarea", placeholder="How to apply...", rows="4") }}
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <aside class="composer-sidebar">
+                <div class="sidebar-card">
+                    <h3 class="section-label">Inventory & Pricing</h3>
+                    <div class="form-group">
+                        <label>Retail Price ($)</label>
+                        {{ form.price(class="admin-input", placeholder="0.00") }}
+                        {% for error in form.price.errors %}<span class="invalid-feedback">{{ error }}</span>{% endfor %}
+                    </div>
+                    <div class="form-group">
+                        <label>Stock Count</label>
+                        {{ form.stock_count(class="admin-input", placeholder="0") }}
+                        {% for error in form.stock_count.errors %}<span class="invalid-feedback">{{ error }}</span>{% endfor %}
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        {{ form.category(class="admin-select") }}
+                    </div>
+                    <div class="form-group">
+                        <label>Store Tag</label>
+                        {{ form.description(class="admin-select") }}
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3 class="section-label">Product Imagery</h3>
+                    
+                    {# If editing, show the current live photo #}
+                    {% if product %}
+                    <div class="current-image-preview">
+                        <p class="file-hint">Current Image:</p>
+                        <img src="{{ url_for('static', filename='images/product_images/' + product.image_file) }}" alt="Current image" style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+                    </div>
+                    {% endif %}
+
+                    <div class="image-upload-zone">
+                        <i class="las la-cloud-upload-alt"></i>
+                        {{ form.image(class="file-input") }}
+                        <span class="file-custom-label">{{ 'Replace product photo' if product else 'Click to upload product photo' }}</span>
+                    </div>
+                    {% for error in form.image.errors %}<span class="invalid-feedback">{{ error }}</span>{% endfor %}
+                </div>
+            </aside>
+        </div>
+    </form>
+</div>
+{% endblock %}

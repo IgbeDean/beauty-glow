@@ -1,0 +1,151 @@
+{% extends "main/layout.html" %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/shop.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="shop-container">
+    <aside class="shop-nav-rail">
+        <div class="nav-sticky-wrapper">
+            <h2 class="shop-brand-title">Collections</h2>
+            
+            <nav class="side-menu">
+                <a href="{{ url_for('main.shop') }}" class="side-link {{ 'active' if not current_cat }}">All Products</a>
+                <a href="{{ url_for('main.shop', category_name='best-sellers') }}" class="side-link {{ 'active' if current_cat == 'best-sellers' }}">Best Sellers</a>
+                <a href="{{ url_for('main.shop', category_name='new') }}" class="side-link {{ 'active' if current_cat == 'new' }}">New Arrivals</a>
+                
+                <div class="menu-divider"></div>
+                
+                <a href="{{ url_for('main.shop', category_name='eyes') }}" class="side-link {{ 'active' if current_cat == 'eyes' }}">Eyes</a>
+                <a href="{{ url_for('main.shop', category_name='face') }}" class="side-link {{ 'active' if current_cat == 'face' }}">Face</a>
+                <a href="{{ url_for('main.shop', category_name='lips') }}" class="side-link {{ 'active' if current_cat == 'lips' }}">Lips</a>
+            </nav>
+            
+            <div class="shop-filters">
+                <p class="filter-label">Sort By</p>
+                <form id="sort-form" method="GET">
+                    {% if request.args.get('category_name') %}
+                        <input type="hidden" name="category_name" value="{{ request.args.get('category_name') }}">
+                    {% endif %}
+
+                    <select name="sort" class="custom-select" onchange="document.getElementById('sort-form').submit()">
+                        <option value="recommended" {{ 'selected' if request.args.get('sort') == 'recommended' }}>Recommended</option>
+                        <option value="price_low" {{ 'selected' if request.args.get('sort') == 'price_low' }}>Price: Low to High</option>
+                        <option value="price_high" {{ 'selected' if request.args.get('sort') == 'price_high' }}>Price: High to Low</option>
+                    </select>
+                </form>
+            </div>
+
+        </div>
+    </aside>
+
+    <main class="shop-gallery">
+        <div class="shop-banner-container">
+            <img class="category-hero-img" 
+                src="{% if current_cat == 'new' %}{{ url_for('static', filename='images/home_images/background2.jpg') }}
+                    {% elif current_cat == 'best-sellers' %}{{ url_for('static', filename='images/home_images/background4.jpg') }}
+                    {% elif current_cat == 'lips' %}{{ url_for('static', filename='images/home_images/08.jpg') }}
+                    {% elif current_cat == 'eyes' %}{{ url_for('static', filename='images/home_images/shop_eyes.jpg') }}
+                    {% elif current_cat == 'face' %}{{ url_for('static', filename='images/home_images/shop_face.jpg') }}
+                    {% else %}{{ url_for('static', filename='images/home_images/background3.jpg') }}{% endif %}" 
+                alt="{{ title }}">
+            
+            <div class="banner-content">
+                <span class="banner-subtitle">The Collection</span>
+                <h2 class="banner-title">{{ title }}</h2>
+            </div>
+        </div>
+
+        <header class="gallery-header">
+            <span class="breadcrumb-lite">Home / Shop / {{ title }}</span>
+            <h1 class="gallery-title">Beauty Glow</h1>
+        </header>
+
+        <div class="product-grid-custom">
+            {% for product in products %}
+            <div class="product-item"
+                onclick="openQuickView(this)"
+                data-id="{{ product.id }}"
+                data-name="{{ product.name }}" 
+                data-price="${{ product.price }}" 
+                data-desc="{{ product.description }}" 
+                data-img="{{ url_for('static', filename='images/product_images/' + product.image_file) }}">
+                
+                <div class="image-box">
+                    <img src="{{ url_for('static', filename='images/product_images/' + product.image_file) }}" alt="{{ product.name }}">
+                    <div class="hover-action">
+                        <button class="add-btn-minimal">Quick View +</button>
+                    </div>
+                </div>
+                <div class="item-meta">
+                    <span class="item-name">{{ product.name }}</span>
+                    <span class="item-price">${{ product.price }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+</div>
+
+<div id="quickview-modal" class="modal-overlay" onclick="if(event.target == this) closeModal()">
+    <div class="modal-container">
+        <button class="close-modal-btn" onclick="closeModal()">&times;</button>
+        
+        <div class="modal-content-wrapper">
+            <div class="modal-image-side">
+                <img id="modal-img" src="" alt="Product Detail">
+            </div>
+            
+            <div class="modal-info-side">
+                <h2 id="modal-name"></h2>
+                <p id="modal-price" class="modal-price-tag"></p>
+                <div class="modal-line"></div>
+                <p style="text-transform: uppercase;" id="modal-desc" class="modal-description-text"></p>
+                
+                <div class="modal-footer-actions">
+                    <div class="modal-qty">
+                        <label>Quantity</label>
+                        <input type="number" id="modal-qty-input" value="1" min="1">
+                    </div>
+                    <form id="modal-add-form" action="" method="POST">
+                        <button type="submit" class="add-to-cart-large" id="modal-add-btn">Add to Cart</button>                 
+                    </form>
+                    <a id="modal-link" href="#" class="view-details-link">See Full Product Info</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function openQuickView(element) {
+        const modal = document.getElementById('quickview-modal');
+        
+        const productId = element.getAttribute('data-id');
+        const name = element.getAttribute('data-name');
+        const price = element.getAttribute('data-price');
+        const desc = element.getAttribute('data-desc');
+        const img = element.getAttribute('data-img');
+
+        // This line dynamically sets the URL for the form!
+        document.getElementById('modal-add-form').action = `/cart/add/${productId}`;
+
+        document.getElementById('modal-link').href = `/product/${productId}`;
+        document.getElementById('modal-name').innerText = name;
+        document.getElementById('modal-price').innerText = price;
+        document.getElementById('modal-desc').innerText = desc;
+        document.getElementById('modal-img').src = img;
+
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('quickview-modal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; 
+    }
+</script>
+{% endblock %}

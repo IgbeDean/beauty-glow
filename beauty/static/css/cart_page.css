@@ -1,0 +1,303 @@
+/* --- High-End Editorial Cart: Two-Column Layout --- */
+.cart-page-section { 
+    padding: 80px 0; 
+    background: #fff; 
+    color: #000; 
+    min-height: 100vh;
+}
+
+.cart-container { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 40px; 
+}
+
+/* Header Styling */
+.cart-header { 
+    display: flex; 
+    align-items: baseline; 
+    justify-content: space-between;
+    border-bottom: 2px solid #000; 
+    margin-bottom: 50px; 
+    padding-bottom: 15px;
+}
+.editorial-title { 
+    font-size: 2.8rem; 
+    font-weight: 300; 
+    text-transform: lowercase; 
+    font-style: italic; 
+    margin: 0;
+}
+.item-count-header { 
+    font-size: 0.85rem; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
+    font-weight: 600;
+}
+
+/* THE GRID SYSTEM */
+.cart-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 0.6fr; /* 70/30 split */
+    gap: 80px;
+    align-items: start;
+}
+
+/* LEFT COLUMN: Item List */
+.cart-items-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-card {
+    display: flex; 
+    justify-content: space-between; 
+    padding: 40px 0;
+    border-bottom: 1px solid #e5e5e5; 
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cart-card-main { display: flex; gap: 40px; }
+
+.product-thumb img { 
+    width: 160px; 
+    height: 200px; 
+    object-fit: cover; 
+    background-color: #f9f9f9;
+}
+
+.category-tag { 
+    font-size: 0.75rem; 
+    text-transform: uppercase; 
+    letter-spacing: 1.5px; 
+    color: #888; 
+    margin-bottom: 8px; 
+}
+.product-name { 
+    font-size: 1.5rem; 
+    font-weight: 500; 
+    margin-bottom: 20px; 
+    letter-spacing: -0.5px;
+}
+
+.qty-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid #000;
+    width: fit-content;
+    height: 35px;
+}
+
+.qty-btn {
+    background: none;
+    border: none;
+    width: 35px;
+    height: 100%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.qty-btn:hover { background: #f8f8f8; }
+
+.qty-value {
+    width: 30px;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
+}
+
+.cart-card-actions { 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    align-items: flex-end; 
+    min-width: 120px;
+}
+.row-total { 
+    font-size: 1.2rem; 
+    font-weight: 700; 
+}
+
+/* --- High-End Editorial Summary Sidebar --- */
+.cart-summary-sidebar {
+    position: sticky;
+    top: 10px; /* Adjusted to sit perfectly in view */
+    height: fit-content;
+}
+
+.summary-box { 
+    background: #ffffff; 
+    padding: 50px 40px; /* Increased padding for a 'roomy' luxury feel */
+    border-left: 1px solid #000; 
+    display: flex;
+    flex-direction: column;
+}
+
+.summary-title { 
+    font-size: 1rem; 
+    text-transform: uppercase; 
+    letter-spacing: 4px; 
+    margin-bottom: 45px; 
+    font-weight: 800;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.summary-details {
+    margin-bottom: 30px;
+}
+
+.line-item { 
+    display: flex; 
+    justify-content: space-between; 
+    margin-bottom: 25px; 
+    font-size: 1.05rem; 
+    color: #444;
+    font-weight: 300;
+}
+
+.line-item span:last-child {
+    color: #000;
+    font-weight: 500;
+}
+
+/* Specific styling for the Total */
+.total-line { 
+    border-top: 1px solid #000; 
+    padding-top: 30px; 
+    margin-top: 10px; 
+    font-weight: 800 !important; 
+    font-size: 1.6rem; 
+    color: #000;
+    letter-spacing: -1px;
+}
+
+.total-line span:last-child {
+    font-weight: 900;
+}
+
+.free-text { 
+    color: #7eb382 !important; /* Elegant sage green for 'Complimentary' */
+    font-style: italic;
+    font-weight: 400 !important;
+}
+
+/* BUTTON REFINEMENT */
+.primary-black-btn {
+    width: 100%; 
+    background: #000; 
+    color: #fff; 
+    border: 1px solid #000;
+    padding: 24px; /* Taller button for more importance */
+    text-transform: uppercase; 
+    letter-spacing: 4px;
+    font-size: 0.95rem; 
+    font-weight: 700; 
+    cursor: pointer; 
+    transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.primary-black-btn:hover { 
+    background: #333; /* Softening the hover slightly instead of white */
+    transform: scale(1.02); /* Very subtle pop-out effect */
+}
+
+.secondary-outline-link {
+    text-align: center;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #888;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.secondary-outline-link:hover {
+    color: #000;
+}
+
+.text-link-btn {
+    background: none; 
+    border: none; 
+    font-size: 0.7rem; 
+    text-transform: uppercase;
+    letter-spacing: 1.5px; 
+    color: #cc4444; /* Muted red for removal */
+    cursor: pointer; 
+    padding: 0;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.text-link-btn:hover { 
+    color: #000; 
+    text-decoration: underline; 
+}
+
+/* Responsive adjustment */
+@media (max-width: 1024px) {
+    .cart-grid { grid-template-columns: 1fr; gap: 50px; }
+    .cart-summary-sidebar { position: static; }
+    .editorial-title { font-size: 2.2rem; }
+}
+
+/* --- Empty State Styling --- */
+.empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh; /* Centers content vertically in the viewport */
+    text-align: center;
+    padding: 40px;
+}
+
+.empty-state-content {
+    max-width: 450px;
+    width: 100%;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    font-weight: 200;
+    color: #eee; /* Very light so it doesn't distract */
+    margin-bottom: 20px;
+    font-family: serif;
+}
+
+.empty-title {
+    font-size: 2rem;
+    font-weight: 300;
+    text-transform: lowercase;
+    font-style: italic;
+    margin-bottom: 15px;
+    letter-spacing: -1px;
+}
+
+.empty-text {
+    font-size: 1rem;
+    color: #888;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    font-weight: 300;
+}
+
+.empty-actions {
+    display: flex;
+    justify-content: center;
+}
+
+/* Reusing your primary-black-btn with a specific tweak for this page */
+.empty-state .primary-black-btn {
+    padding: 20px 40px;
+    width: auto; /* Don't make it full width here, let it breathe */
+    min-width: 250px;
+}

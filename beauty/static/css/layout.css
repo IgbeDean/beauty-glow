@@ -1,0 +1,532 @@
+/* --- Variables & Reset --- */
+:root {
+    --brand-rose: #634141;   /* Main Background */
+    --brand-extra: #d59090;  /* Glow Accent */
+    --brand-black: #000000;
+    --brand-text: rgb(80, 80, 80);
+    --white: #ffffff;
+    --font-main: system-ui, -apple-system, sans-serif;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Crucial for spacing */
+    font-family: var(--font-main);
+}
+
+/* --- Navbar Container --- */
+.navbar {
+    background-color: var(--brand-rose);
+    padding: 1.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --- Logo: BEUATY GLOW --- */
+.nav-logo {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transition: var(--transition);
+}
+
+.nav-logo span {
+    color: var(--brand-extra);
+    font-weight: 300; /* Contrast between bold and thin looks luxe */
+}
+
+.nav-logo:hover {
+    transform: scale(1.05);
+}
+
+/* --- Menu Links --- */
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+}
+
+.nav-menu li a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: inline-block;
+    transition: var(--transition);
+}
+
+/* Keep the hover state active for the current page */
+.nav-menu li a:hover,
+.nav-menu li a.active-nav {
+    color: var(--brand-extra);
+    transform: scale(1.15);
+    display: inline-block; /* Ensures transform works properly */
+}
+
+/* --- Actions: Login & Cart --- */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.user-auth-wrapper, .cart-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--white);
+}
+
+.nav-actions i {
+    font-size: 1.5rem; /* Larger icons for visibility */
+}
+
+/* Update this selector to include .nav-link */
+.btn-auth, .btn-cart, .nav-link {
+    text-decoration: none;
+    color: inherit; /* Follows wrapper color (White -> Pink) */
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between icon and "Hi, Name" */
+}
+
+/* Ensure the wrapper handles the hover for everything inside it */
+.user-auth-wrapper:hover, .cart-wrapper:hover {
+    transform: scale(1.1);
+    color: var(--brand-extra);
+}
+
+/* Container must be relative */
+.user-dropdown {
+    position: relative;
+    cursor: pointer;
+}
+
+.dropdown-trigger {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    color: white;
+}
+
+/* The Menu Box */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 200px;
+    background: white;
+    border: 1px solid #eee;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    padding: 10px 0;
+    margin-top: 15px;
+    display: none; /* Hidden by default */
+    z-index: 1000;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.dropdown-item.admin-link {
+    color: #d9534f; /* A subtle alert red or stay with #111 for stealth */
+    font-weight: 600;
+    background-color: #fff9f9; /* Very faint tint to separate from user links */
+}
+
+.dropdown-item.admin-link i {
+    color: #d9534f;
+}
+
+.dropdown-item.admin-link:hover {
+    background-color: #fceaea;
+}
+
+.dropdown-divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 5px 0;
+}
+
+.logout-link {
+    color: #d9534f; /* Slight red tint for logout */
+}
+
+/* A little badge for the cart count inside dropdown */
+.cart-count-badge {
+    background: #000;
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-left: auto;
+}
+
+.dropdown-menu.show {
+    display: block;
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-trigger .la-angle-down {
+    transition: transform 0.3s ease;
+}
+
+/* When the parent has the .show class (we'll add this to the trigger too) */
+.user-dropdown.active .la-angle-down {
+    transform: rotate(180deg);
+}
+
+
+
+
+/* AI STICKY CHAT BIX */
+.ai-chat-sticky {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--brand-rose); /* #634141 */
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border-radius: 50px; /* Rounded pill shape */
+    cursor: pointer;
+    z-index: 2000; /* Higher than the navbar */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(213, 144, 144, 0.3); /* Subtle glow border */
+}
+
+/* Icon size */
+.ai-chat-sticky i {
+    font-size: 1.5rem;
+    color: var(--brand-extra); /* #d59090 */
+}
+
+/* Text styling */
+.chat-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Hover Effect: It grows and the glow intensifies */
+.ai-chat-sticky:hover {
+    transform: scale(1.1) translateY(-5px);
+    background-color: var(--brand-black);
+    box-shadow: 0 15px 30px rgba(213, 144, 144, 0.4);
+}
+
+/* Subtle Pulse Animation to attract attention */
+@keyframes chat-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(213, 144, 144, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(213, 144, 144, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(213, 144, 144, 0); }
+}
+
+.ai-chat-sticky {
+    animation: chat-pulse 3s infinite;
+}
+
+
+
+
+
+/* --- Flash Message Styling --- */
+.flash-messages-container {
+    position: fixed;
+    top: 100px; /* Slightly lower for better breathing room */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    width: 90%;
+    max-width: 400px; /* Slightly narrower looks more elegant */
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.custom-alert {
+    padding: 16px 24px;
+    border-radius: 8px; /* Softer corners */
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: left; /* Left aligned looks more professional with the border-left */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: slideDown 0.5s ease forwards;
+    border-left: 4px solid;
+    background-color: white; /* Clean white background */
+}
+
+/* Transitions for the auto-hide */
+.custom-alert.hiding {
+    animation: slideUpFade 0.5s ease forwards;
+}
+
+/* Sophisticated Color Palette */
+.alert-success { border-color: #7eb382; color: #2d4a2e; background-color: #f6fff7; }
+.alert-danger, .alert-error { border-color: #e5989b; color: #6b3e3e; background-color: #fff5f5; }
+.alert-warning { border-color: #e9c46a; color: #6d5921; background-color: #fffdf5; }
+.alert-info { border-color: #a8dadc; color: #2b4f51; background-color: #f1fafa; }
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUpFade {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-20px); }
+}
+
+
+
+
+
+/* THE CART SIDEBAR DESIGN */
+:root {
+    --primary-black: #1a1a1a;
+    --soft-white: #faf9f6;
+    --accent-pink: #b5838d; 
+    --border-light: #eeeeee;
+    --text-muted: #888888;
+}
+
+/* Sidebar Container */
+.cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 420px;
+    height: 100%;
+    background: #ffffff;
+    z-index: 2000;
+    transform: translateX(100%);
+    transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -15px 0 40px rgba(0,0,0,0.04);
+}
+
+.cart-sidebar.active {
+    transform: translateX(0);
+}
+
+/* Header: Refined & Spaced */
+.cart-sidebar-header {
+    padding: 40px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.cart-sidebar-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--primary-black);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 300;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    color: var(--accent-pink);
+}
+
+/* Content Area: Elegant Empty State */
+.cart-sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 40px 30px;
+}
+
+.empty-msg {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 50px;
+    letter-spacing: 0.5px;
+    line-height: 2;
+}
+
+/* Footer: Sticky & High Contrast */
+.cart-sidebar-footer {
+    padding: 30px;
+    background: #fff;
+    border-top: 1px solid var(--border-light);
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.cart-total span:first-child {
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+}
+
+.cart-total span:last-child {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Buttons: Minimalist but Bold */
+.btn-view-full-cart {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    color: var(--primary-black);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.btn-view-full-cart:hover {
+    color: var(--accent-pink);
+}
+
+.btn-checkout-fast {
+    width: 100%;
+    background: var(--primary-black);
+    color: #fff;
+    padding: 20px;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.4s ease;
+}
+
+.btn-checkout-fast:hover {
+    background: var(--accent-pink);
+}
+
+/* Overlay Background */
+.cart-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 26, 26, 0.3); /* Softer dark overlay */
+    backdrop-filter: blur(2px); /* Makes the shop look out of focus */
+    z-index: 1500;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease;
+}
+
+.cart-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.cart-item-row {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #f5f5f5;
+    position: relative;
+}
+
+.cart-item-img {
+    width: 65px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.cart-item-info {
+    padding-left: 20px;
+    flex: 1;
+}
+
+.cart-item-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.cart-item-price {
+    color: var(--accent-pink);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.remove-item {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.remove-item:hover { color: var(--primary-black); }

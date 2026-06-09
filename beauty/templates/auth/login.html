@@ -1,0 +1,51 @@
+{% extends "auth/layout.html" %}
+
+{% block content %}
+<div class="auth-card">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }} <legend class="auth-legend">Welcome Back</legend>
+        <p class="auth-subtitle">Sign in to access your glow.</p>
+
+        <div class="form-group">
+            {{ form.email.label }}
+            {% if form.email.errors %}
+                {{ form.email(class="form-control is-invalid") }}
+                <div class="error-message">
+                    {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.email(class="form-control", placeholder="email@example.com") }}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.password.label }}
+            {% if form.password.errors %}
+                {{ form.password(class="form-control is-invalid") }}
+                <div class="error-message">
+                    {% for error in form.password.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+            {% else %}
+                {{ form.password(class="form-control") }}
+            {% endif %}
+        </div>
+
+        <div class="form-check">
+            {{ form.remember(class="form-check-input") }}
+            {{ form.remember.label(class="form-check-label") }}
+        </div>
+
+        <div class="form-submit">
+            {{ form.submit(class="btn-auth") }}
+        </div>
+    </form>
+
+    <div class="auth-switch">
+        <p>New to Beauty Glow? <a href="{{ url_for('auth.register') }}">Create Account</a></p>
+    </div>
+</div>
+{% endblock %}

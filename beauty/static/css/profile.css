@@ -1,0 +1,500 @@
+/* --- Root Setup --- */
+:root {
+    --brand-black: #1a1a1a;
+    --brand-teal: #a8dadc;
+    --brand-pink: #e5989b;
+    --soft-gray: #f8f8f8;
+    --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.profile-page { padding: 80px 0; background-color: #fff; color: var(--brand-black); }
+.profile-container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+
+
+
+/* --- 1. Header & Dynamic Image --- */
+.profile-header {
+    background: var(--soft-gray);
+    padding: 50px;
+    border-radius: 4px;
+    margin-bottom: 60px;
+    border: 1px solid #f0f0f0;
+}
+
+.user-identity{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.profile-img-wrapper {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    transition: var(--transition);
+}
+
+.account-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: var(--transition);
+}
+
+.upload-label {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.5rem;
+    opacity: 0;
+    cursor: pointer;
+    transition: var(--transition);
+    transform: scale(0.9);
+}
+
+.profile-img-wrapper:hover .upload-label {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.profile-img-wrapper:hover .account-img {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+
+
+
+
+/* --- 2. Alive Navigation --- */
+.profile-nav { display: flex; flex-direction: column; gap: 10px; }
+
+.nav-link {
+    text-decoration: none;
+    color: #888;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 12px 20px;
+    border-left: 2px solid transparent;
+    transition: var(--transition);
+}
+
+.nav-link:hover {
+    color: var(--brand-black);
+    background: var(--soft-gray);
+    padding-left: 30px; /* "Slide" effect on hover */
+}
+
+.nav-link.active {
+    color: var(--brand-black);
+    font-weight: 700;
+    border-left: 2px solid var(--brand-black);
+    background: #fdfdfd;
+}
+
+.logout { color: var(--brand-pink) !important; }
+.logout:hover { background: #fff5f5; }
+
+
+
+
+
+/* --- 3. Form Cards & Inputs --- */
+.form-card {
+    background: #fff;
+    padding: 50px;
+    border: 1px solid #eee;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.02);
+}
+
+.form-group { margin-bottom: 35px; position: relative; }
+
+.form-input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    padding: 12px 0;
+    font-size: 1.1rem;
+    background: transparent;
+    transition: var(--transition);
+}
+
+.form-input:focus {
+    outline: none;
+    border-bottom: 1px solid var(--brand-black);
+    padding-left: 5px; /* Subtle growth effect */
+}
+
+
+
+
+/* --- 4. The "Alive" Primary Button --- */
+.primary-black-btn {
+    width: 100%;
+    background: var(--brand-black);
+    color: #fff;
+    border: 1px solid var(--brand-black);
+    padding: 22px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: var(--transition);
+}
+
+.primary-black-btn:hover {
+    color: var(--brand-black);
+    background: transparent;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.primary-black-btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+}
+
+/* Form Grid System */
+.profile-grid { display: grid; grid-template-columns: 280px 1fr; gap: 80px; align-items: start; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+
+
+
+
+/* --- 5. The slider pages --- */   
+
+/* 1. Hide every section - use !important to ensure no grid/flex overrides it */
+.profile-section-content {
+    display: none !important;
+}
+
+/* 2. Show only the active one */
+.profile-section-content.active {
+    display: block !important;
+    animation: slideUpFade 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
+
+/* THE USER WISHLIST */
+.wishlist-container {
+    margin-top: 30px;
+}
+
+.wishlist-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #f0f0f0;
+    transition: var(--transition);
+}
+
+.wishlist-product {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.wishlist-product img {
+    width: 70px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.wishlist-info h3 {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+}
+
+.wishlist-info .price {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.wishlist-actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.wishlist-cart-btn {
+    background: var(--brand-black);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.wishlist-remove-btn {
+    background: none;
+    border: none;
+    color: #9e9e9e;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 1.5rem;
+}
+
+.wishlist-remove-btn:hover {
+    color: var(--brand-pink);
+}   
+
+
+
+
+/* the user address */
+/* --- ADDRESS SECTION LAYOUT --- */
+#addresses {
+    padding: 20px 0;
+}
+
+.card-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.card-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #111;
+    margin: 0;
+}
+
+/* --- THE GRID --- */
+.address-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+/* --- ADDRESS CARDS --- */
+.address-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 25px;
+    position: relative;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.address-card:hover {
+    border-color: #000;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.address-card.default-active {
+    border: 2px solid #111;
+    background-color: #f9f9f9;
+}
+
+.default-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #111;
+    color: #fff;
+    font-size: 0.7rem;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* --- CARD TYPOGRAPHY --- */
+.addr-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+.address-details p {
+    font-size: 0.95rem;
+    color: #555;
+    margin: 4px 0;
+    line-height: 1.4;
+}
+
+.addr-phone {
+    margin-top: 12px !important;
+    font-weight: 500;
+    color: #222 !important;
+}
+
+/* --- CARD ACTIONS --- */
+.address-footer {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+}
+
+.delete-link {
+    background: none;
+    border: none;
+    color: #d9534f;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+}
+
+.delete-link:hover {
+    color: #c9302c;
+}
+
+/* --- ADD NEW BUTTON --- */
+.add-address-trigger {
+    background: #111;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.add-address-trigger:hover {
+    background: #333;
+}
+
+/* --- THE FORM CONTAINER --- */
+.slide-down-form {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 35px;
+    margin-top: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.form-divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin-bottom: 25px;
+}
+
+/* --- FORM ELEMENTS --- */
+.form-row, .form-row-triple {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #111;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+    font-size: 0.95rem;
+}
+
+/* --- FORM BUTTONS --- */
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.primary-black-btn {
+    background: #111;
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    flex: 2;
+}
+
+.cancel-btn {
+    background: #fff;
+    color: #666;
+    border: 1px solid #ddd;
+    padding: 14px 28px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    flex: 1;
+}
+
+.cancel-btn:hover {
+    background: #f5f5f5;
+}
+
+.empty-msg {
+    color: #888;
+    font-style: italic;
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+}

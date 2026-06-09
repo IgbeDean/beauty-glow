@@ -1,0 +1,59 @@
+{% extends "admin/admin_layout.html" %}
+
+{% block title %}Product Archive{% endblock %}
+
+{% block admin_content %}
+<div class="admin-composer">
+    <header class="composer-header">
+        <div class="header-left">
+            <h1 class="title-medium">Product Vault</h1>
+            <p class="text-muted">Manage your hidden or seasonal collections</p>
+        </div>
+    </header>
+
+    <div class="composer-section">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th class="text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr class="archived-row">
+                    <td>
+                        <div class="product-cell">
+                            <img src="{{ url_for('static', filename='images/product_images/' + product.image_file) }}" class="table-img">
+                            <div class="product-info">
+                                <span class="product-name">{{ product.name }}</span>
+                                <span class="product-tag">Archived</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ product.category }}</td>
+                    <td>${{ "%.2f"|format(product.price) }}</td>
+                    <td>{{ product.stock_count }}</td>
+                    <td class="table-actions text-right">
+                        <form action="{{ url_for('admin.restore_product', product_id=product.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="action-btn restore" title="Restore to Shop">
+                                <i class="las la-undo-alt"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="empty-state">
+                        <i class="las la-box-open"></i>
+                        <p>Your vault is currently empty.</p>
+                    </td>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,435 @@
+/* Container holds the two main pieces */
+.shop-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #fff;
+}
+
+/* --- LEFT SIDE: Navigation Rail --- */
+.shop-nav-rail {
+    width: 300px;
+    height: 100vh; /* Full viewport height */
+    position: sticky;
+    top: 0;
+    padding: 100px 40px; /* Adjust based on your main navbar height */
+    border-right: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+}
+
+.nav-sticky-wrapper {
+    position: sticky;
+    top: 120px; /* Sticks as you scroll the gallery */
+}
+
+.shop-brand-title {
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #999;
+    margin-bottom: 30px;
+}
+
+.side-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 2rem;
+}
+
+.side-link {
+    text-decoration: none;
+    color: #111;
+    font-size: 18px;
+    font-weight: 300;
+    transition: 0.3s;
+}
+
+.side-link:hover, .side-link.active {
+    padding-left: 10px;
+    color: #b5838d; /* Subtle dusty rose color */
+}
+
+.menu-divider {
+    height: 2px;
+    background: #eee;
+    margin: 10px 0;
+    width: 50px;
+}
+
+/* Container for the filter section */
+.shop-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.filter-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #333;
+    margin: 0;
+}
+
+/* The Select Wrapper */
+#sort-form {
+    position: relative;
+    width: 200px;
+}
+
+.custom-select {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    color: #444;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    cursor: pointer;
+    appearance: none; /* Removes default browser arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    transition: all 0.3s ease;
+}
+
+.custom-select:focus {
+    outline: none;
+    border-color: #000;
+    box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+}
+
+.custom-select:hover {
+    border-color: #b3b3b3;
+}
+
+/* Custom Arrow Icon */
+#sort-form::after {
+    content: '\f107'; /* LineAwesome angle-down code */
+    font-family: 'Line Awesome Free';
+    font-weight: 900;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* Makes clicks pass through to the select */
+    color: #888;
+    font-size: 0.8rem;
+}
+
+/* --- RIGHT SIDE: Gallery Area --- */
+.shop-gallery {
+    flex: 1;
+    padding: 100px 80px;
+    background-color: #ffffff;
+}
+
+.gallery-header {
+    margin-bottom: 50px;
+}
+
+.shop-banner-container {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Adjust this to your preferred height */
+    overflow: hidden;
+    margin-bottom: 50px;
+}
+
+.category-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* This is the secret to making <img> behave like background-size: cover */
+    object-position: center;
+    filter: brightness(0.85); /* Darkens the image slightly so white text pops */
+    transition: opacity 0.5s ease-in-out;
+}
+
+.banner-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Perfectly centers the text over the image */
+    text-align: center;
+    color: #ffffff;
+    z-index: 2;
+}
+
+.banner-subtitle {
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.banner-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.breadcrumb-lite {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #aaa;
+}
+
+.gallery-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    margin-top: 10px;
+}
+
+/* Grid Logic */
+.product-grid-custom {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 60px 30px;
+}
+
+.image-box {
+    position: relative;
+    overflow: hidden;
+    background: #f9f9f9;
+    aspect-ratio: 3 / 4; /* Modern portrait look */
+}
+
+.image-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.product-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Quick Add Overlay */
+.hover-action {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    transform: translateY(100%);
+    transition: 0.4s ease;
+}
+
+.product-item:hover .hover-action {
+    transform: translateY(0);
+}
+
+.add-btn-minimal {
+    width: 100%;
+    padding: 15px;
+    background: #111;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Metadata below image */
+.item-meta {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.item-name {
+    font-size: 16px;
+    color: #111;
+}
+
+.item-price {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+
+/* <!-- MODAL FOR EACH IMAGE --> */
+/* MODAL OVERLAY - Deepened the background for focus */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(18, 18, 18, 0.85); /* Richer dark tone */
+    backdrop-filter: blur(10px); /* Increased blur for luxury feel */
+    display: none;
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+/* THE CONTAINER - Made wider and added a subtle shadow */
+.modal-container {
+    background: white;
+    width: 95%;
+    max-width: 1100px; /* Increased width */
+    height: auto;
+    min-height: 600px;
+    padding: 60px; /* More breathing room */
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: modalSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalSlideIn {
+    from { opacity: 0; transform: scale(0.95) translateY(30px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* CONTENT WRAPPER - Better alignment */
+.modal-content-wrapper {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr; /* Image gets slightly more space */
+    gap: 60px;
+    align-items: center;
+}
+
+/* IMAGE SIDE */
+.modal-image-side {
+    overflow: hidden;
+    background: #f9f9f9;
+}
+
+.modal-image-side img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* INFO SIDE - Typography focus */
+.modal-info-side {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+#modal-name {
+    font-family: 'Playfair Display', serif; /* Or your chosen elegant font */
+    font-size: 38px;
+    font-weight: 400;
+    color: #111;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+}
+
+.modal-price-tag {
+    font-size: 22px;
+    color: #666;
+    font-weight: 300;
+    margin-bottom: 25px;
+}
+
+.modal-line {
+    width: 40px;
+    height: 2px;
+    background: #b5838d; /* Your brand rose color */
+    margin-bottom: 25px;
+}
+
+.modal-description-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 40px;
+    font-weight: 300;
+}
+
+/* QUANTITY & BUTTONS */
+.modal-footer-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.modal-qty {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.modal-qty label {
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #999;
+}
+
+.modal-qty input {
+    width: 60px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+    outline: none;
+}
+
+.add-to-cart-large {
+    background: #111;
+    width: 100%;
+    color: white;
+    padding: 20px;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-to-cart-large:hover {
+    background: #b5838d; /* Brand color on hover */
+    letter-spacing: 4px;
+}
+
+.view-details-link {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #111;
+    padding: 15px;
+    border: 1px solid #111;
+    transition: all 0.3s ease;
+}
+
+.view-details-link:hover {
+    background: #f9f9f9;
+    color: var(--brand-extra, #b5838d);
+    border-color: var(--brand-extra, #b5838d);
+    letter-spacing: 4px;
+}
+
+/* CLOSE BUTTON */
+.close-modal-btn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-size: 3rem;
+    font-weight: 200;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #aaa;
+    transition: color 0.3s;
+}
+
+.close-modal-btn:hover {
+    color: #111;
+}

@@ -1,0 +1,19 @@
+{% if items %}
+    {% for item in items %}
+        <div class="cart-item-row">
+            <img src="{{ url_for('static', filename='images/product_images/' + item.product.image_file) }}" class="cart-item-img">
+            <div class="cart-item-info">
+                <span class="cart-item-name">{{ item.product.name }}</span>
+                <span class="cart-item-price">${{ "{:,.2f}".format(item.product.price) }}</span>
+                <span class="cart-item-qty">Qty: {{ item.quantity }}</span>
+            </div>
+            <form class="ajax-remove-form" action="{{ url_for('user.remove_from_cart', item_id=item.id) }}" method="POST" style="display: inline;">
+                <button type="submit" class="remove-item" title="Remove Item">&times;</button>
+            </form>
+        </div>
+    {% endfor %}
+{% else %}
+    <div class="empty-cart-view">
+        <p class="empty-msg">Your beauty bag is currently empty.<br>Start adding your favorites!</p>
+    </div>
+{% endif %}

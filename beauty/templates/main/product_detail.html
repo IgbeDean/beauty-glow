@@ -1,0 +1,259 @@
+{% extends "main/layout.html" %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/product_detail.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="pdp-outer-wrapper">
+    <nav class="pdp-top-nav">
+        <div class="breadcrumb-left">
+            <a href="/">Home</a> / 
+            <a href="{{ url_for('main.shop', category_name=product.category.lower()) }}">{{ product.category }}</a> / 
+            <span>{{ product.name }}</span>
+        </div>
+        <div class="nav-right">
+            {% if prev_product %}
+                <a href="{{ url_for('main.product_detail', product_id=prev_product.id) }}">< Prev</a>
+            {% else %}
+                <span class="disabled-nav">< Prev</span>
+            {% endif %}
+
+            <span class="nav-divider">|</span>
+
+            {% if next_product %}
+                <a href="{{ url_for('main.product_detail', product_id=next_product.id) }}">Next ></a>
+            {% else %}
+                <span class="disabled-nav">Next ></span>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="pdp-main-content">
+        <div class="pdp-image-container">
+            <div class="main-image-box">
+                <img src="{{ url_for('static', filename='images/product_images/' + product.image_file) }}" alt="{{ product.name }}">
+            </div>
+            <div class="pdp-short-desc">
+                <p>{{ product.full_description }}</p>
+            </div>
+        </div>
+
+        <div class="pdp-details-container">
+            <h1 class="product-title-header">{{ product.name }}</h1>
+            <p class="sku-text">SKU: 00{{ product.id }}</p>
+            
+            <p class="product-price-large">${{ product.price }}</p>
+
+            <div class="quantity-selector">
+                <label>Quantity</label>
+                <div class="qty-input-row">
+                    <input type="number" value="1" min="1">
+                </div>
+            </div>
+
+            <div class="pdp-action-buttons">
+                <div class="cart-row">
+                    <form action="{{ url_for('user.add_to_cart', product_id = product.id) }}", method="POST">  
+                        <button type="submit" class="btn-add-cart">Add to Cart</button>
+                    </form>
+                    <button class="btn-wishlist" 
+                            id="wishlist-btn" 
+                            data-product-id="{{ product.id }}"
+                            onclick="handleWishlistToggle()">
+                        {% if current_user.is_authenticated and product.id in current_user.wishlist_product_ids %}
+                            <span class="heart-icon">♥</span>
+                        {% else %}
+                            <span class="heart-icon">♡</span>
+                        {% endif %}
+                    </button>
+                </div>
+                <button class="btn-buy-now">Buy Now</button>
+            </div>
+
+            <div class="pdp-accordion-group">
+                <details open>
+                    <summary>PRODUCT INFO</summary>
+                    <div class="details-inner">
+                        <p>{{ product.full_description }}</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>BENEFITS</summary>
+                    <div class="details-inner">
+                        <p>{{ product.benefits | replace('\n', '<br>') | safe }}</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>INGREDIENTS</summary>
+                    <div class="details-inner">
+                        <p class="ingredients-text">{{ product.ingredients }}</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>HOW TO USE</summary>
+                    <div class="details-inner">
+                        <p>{{ product.usage }}</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>RETURN & REFUND POLICY</summary>
+                    <div class="details-inner">
+                        <p>We want you to love your glow. If you are not entirely satisfied with your purchase, we're here to help. You have 30 calendar days to return an item from the date you received it. To be eligible for a return, your item must be unused and in the same condition that you received it.</p>
+                    </div>
+                </details>
+
+                <details>
+                    <summary>SHIPPING INFO</summary>
+                    <div class="details-inner">
+                        <p><strong>Domestic:</strong> Standard shipping (5-7 business days) is free on all orders over $50.</p>
+                        <p><strong>International:</strong> We ship worldwide. Rates are calculated at checkout based on destination.</p>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- /* Reviews Section */ -->
+<section class="pdp-reviews-section">
+    <div class="reviews-header">
+        <h2 class="title-medium">
+            {% if reviews %}
+                Customer Reviews ({{ reviews|length }})
+            {% else %}
+                No Reviews Yet
+            {% endif %}
+        </h2>
+        <p class="subtitle">Share your thoughts with the community.</p>
+        <button class="btn-main" id="toggle-review-btn" onclick="toggleReviewForm()">Leave a Review</button>
+    </div>
+
+    <div id="review-form-wrapper" class="address-form-box" style="display: none;">
+        <h3 class="title-small">Write a Review</h3>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            
+            <div class="input-group">
+                {{ form.rating.label }}
+                {{ form.rating(class="form-input") }}
+            </div>
+
+            <div class="input-group">
+                {{ form.comment.label }}
+                {{ form.comment(placeholder="The fit, the fabric, the feeling...", rows="4") }}
+            </div>
+
+            <div class="form-buttons">
+                <button type="submit" class="btn-main">Post Review</button>
+                <button type="button" class="btn-cancel" onclick="toggleReviewForm()">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="reviews-list">
+        {% for review in reviews %}
+            <div class="review-item">
+                <div class="review-meta">
+                    <span class="review-author">{{ review.author.full_name }}</span>
+                    <span class="review-stars">
+                        {{ "★" * review.rating }}{{ "☆" * (5 - review.rating) }}
+                    </span>
+                    <span class="review-date">{{ review.date_posted.strftime('%b %d, %Y') }}</span>
+                </div>
+                <p class="review-content">{{ review.comment }}</p>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+
+<!-- related products recommendations -->
+<section class="pdp-recommendations">
+    <h2 class="rec-title">You Might Also Like</h2>
+    <div class="rec-slider-container">
+        <button class="slider-arrow prev">&#10094;</button>
+        
+        <div class="rec-track">
+            {% for item in related_products %}
+            <a href="{{ url_for('main.product_detail', product_id=item.id) }}" class="rec-item">
+                <div class="rec-img-box">
+                    <img src="{{ url_for('static', filename='images/product_images/' + item.image_file) }}" alt="{{ item.name }}">
+                </div>
+                <div class="rec-meta">
+                    <p class="rec-name">{{ item.name }}</p>
+                    <p class="rec-price">${{ item.price }}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+
+        <button class="slider-arrow next">&#10095;</button>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+
+    // this function is for wishlist toggle
+    function handleWishlistToggle() {
+        const btn = document.getElementById('wishlist-btn');
+        const productId = btn.getAttribute('data-product-id');
+        const heart = btn.querySelector('.heart-icon');
+
+        fetch(`/wishlist/toggle/${productId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // If you use CSRF, include it here:
+                // 'X-CSRFToken': document.querySelector('input[name="csrf_token"]').value
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.status === 'added') {
+                heart.innerText = '♥';
+                btn.classList.add('in-wishlist');
+            } else {
+                heart.innerText = '♡';
+                btn.classList.remove('in-wishlist');
+            }
+        })
+        .catch(err => console.log("Wishlist error:", err));
+    }
+
+
+    // this function is for the reviews
+    function toggleReviewForm() {
+        const wrapper = document.getElementById('review-form-wrapper');
+        const btn = document.getElementById('toggle-review-btn');
+        
+        if (wrapper.style.display === 'none') {
+            wrapper.style.display = 'block';
+            btn.style.display = 'none'; // Hide the "Leave a Review" button while writing
+        } else {
+            wrapper.style.display = 'none';
+            btn.style.display = 'inline-block';
+        }
+    }
+    
+</script>
+{% endblock %}
